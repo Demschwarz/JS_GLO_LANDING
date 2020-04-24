@@ -56,9 +56,12 @@ window.addEventListener('DOMContentLoaded', function() {
         const handlerMenu = () => {
             menu.classList.toggle('active-menu');
         }
-        btnMenu.addEventListener('click', handlerMenu);
-        closeBtn.addEventListener('click', handlerMenu);
-        menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu))
+        btnMenu.addEventListener('click', handlerMenu); // обработчик событий 1
+        menu.addEventListener('click', (event) => { // обработчик событий 2
+            if (event.target === closeBtn || ((event.target.closest('menu') === menu) && event.target !== menu)) {
+                handlerMenu();
+            }
+        })
     };
     toggleMenu();
 
@@ -66,45 +69,78 @@ window.addEventListener('DOMContentLoaded', function() {
     // pop-up
 
     const togglePopUp = () => {
-        const popup = document.querySelector('.popup'),
+        const popUp = document.querySelector('.popup'),
             popupContent = document.querySelector('.popup-content'),
             popupBtn = document.querySelectorAll('.popup-btn'),
             popUpClose = document.querySelector('.popup-close');
-        popUpClose.addEventListener('click', () => popup.style.display = 'none');
         popupBtn.forEach((elem) => elem.addEventListener('click', () => {
-            popup.style.display = 'block';
-            popup.style.opacity = 0;
+            popUp.style.display = 'block';
+            popUp.style.opacity = 0;
             if (screen.width >= 768) {
                 let counter = 0;
                 const smth = setInterval(() => {
                     if (counter < 1) {
                         counter += 0.01;
-                        popup.style.opacity = counter;
+                        popUp.style.opacity = counter;
                     } else {
                         clearInterval(smth);
                         return;
                     }
 
                 } , 8);
-                // const way = (document.body.offsetWidth) / 2;
-                // popupContent.style.left = 0;
-                // const start = Date.now();
-                // const smth = setInterval(() => {
-                // const timePassed = Date.now() - start;
-                // if (timePassed >= way) {
-                //         clearInterval(smth);
-                //         return;
-                //     } else {
-                //         popupContent.style.left = timePassed + 'px';
-                //     }
-                // }, 20);
             } else {
                 popupContent.style.margin = 'auto';
             }
-        }))
+        }));
+        popUp.addEventListener('click', (event) => {
+            let target = event.target;
+            if (target.classList.contains('popup-close')) {
+                popUp.style.display = 'none';
+            } else {
+            target = target.closest('.popup-content');
+            if (!target) {
+                popUp.style.display = 'none';
+            }}
+        })
     }
 
     togglePopUp();
+
+    // табы
+
+    const tabs = () => {
+        const tabHeader = document.querySelector('.service-header'),
+            tab = tabHeader.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+        const toggleTabContent = (index) => {
+            for (let i = 0; i < tabContent.length; i++) {
+                if (index === i) {
+                    tab[i].classList.add('active');
+                    tabContent[i].classList.remove('d-none');
+                } else {
+                    tabContent[i].classList.add('d-none');
+                    tab[i].classList.remove('active');
+                }
+            }
+        }
+ 
+        tabHeader.addEventListener('click', (event) => {
+
+            let target  = event.target;
+            target = target.closest('.service-header-tab');
+            
+            if (target) {
+                tab.forEach((item, i) => {
+                if (item === target) {
+                        toggleTabContent(i);
+                    }
+                });
+                
+            }
+        
+        })
+    };
+    tabs();
 });
 
 
