@@ -244,4 +244,25 @@ window.addEventListener('DOMContentLoaded', function() {
 
     };
     slider();
+
+    const getSrc = (event) => {
+        let elemSrc = event.target.src;
+        event.target.src = event.target.dataset.img;
+        event.target.dataset.img = elemSrc;
+    }
+    // смена атрибута src у фото на вход мыши
+    const teamImages = document.querySelectorAll('.command__photo');
+    teamImages.forEach((elem) => {
+        elem.addEventListener('mouseenter', getSrc);
+        elem.addEventListener('mouseout', getSrc);
+    })
+    // задание 2 про регулярки
+
+    const calcInputs = document.querySelector('.calc').querySelectorAll('input');
+    calcInputs.forEach((elem) => {
+        elem.addEventListener('input', () => {
+            elem.value = elem.value.replace(/\D/, '');
+        })
+    })
+    
 });
