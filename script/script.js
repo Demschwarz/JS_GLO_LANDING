@@ -296,18 +296,18 @@ window.addEventListener('DOMContentLoaded', function() {
                 total = price * typeValue *  squareValue * countValue * dayValue;
             }
 
-            // const rotate = () => {
-            //     let counter = 0;
-            //     const peres = setInterval(() => {
-            //         counter += 1;
-            //         totalValue.textContent = counter;
-            //         if (counter >= total) {
-            //             totalValue.textContent = total;
-            //             clearInterval(peres);
-            //         }
-            //     }, 6);
-            // }
-            // rotate();
+            const rotate = () => {
+                let counter = 0;
+                const peres = setInterval(() => {
+                    counter += 1;
+                    totalValue.textContent = counter;
+                    if (counter >= total) {
+                        totalValue.textContent = total;
+                        clearInterval(peres);
+                    }
+                }, 6);
+            }
+            rotate();
             totalValue.textContent = total;
         }
 
