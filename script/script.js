@@ -302,11 +302,13 @@ window.addEventListener('DOMContentLoaded', function() {
             //         counter += 1;
             //         totalValue.textContent = counter;
             //         if (counter >= total) {
+            //             totalValue.textContent = total;
             //             clearInterval(peres);
             //         }
             //     }, 6);
             // }
             // rotate();
+            totalValue.textContent = total;
         }
 
         calcBlock.addEventListener('change', (event) => {
