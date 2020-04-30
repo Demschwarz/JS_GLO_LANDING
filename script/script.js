@@ -293,16 +293,14 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             if (typeValue && squareValue) {
-                total = price * typeValue *  squareValue * countValue * dayValue;
+                total = Math.round(price * typeValue *  squareValue * countValue * dayValue);
             }
 
             // const rotate = () => {
-            //     let counter = 0;
+            //     // let counter = 0;
             //     const peres = setInterval(() => {
-            //         counter += 1;
-            //         totalValue.textContent = counter;
-            //         if (counter >= total) {
-            //             totalValue.textContent = total;
+            //         totalValue.textContent = +totalValue.textContent + 1;
+            //         if (+totalValue.textContent >= total) {
             //             clearInterval(peres);
             //         }
             //     }, 6);
