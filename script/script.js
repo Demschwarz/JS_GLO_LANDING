@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
         updateClock();
     }
-    setInterval(countTimer, 1000, '1 may 2020');
+    setInterval(countTimer, 1000, '1 june 2020');
 
 
 
@@ -158,7 +158,6 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
                 dots.appendChild(elem);
             }
-            console.log(dots);
             slider.appendChild(dots);
         };
         
@@ -312,13 +311,7 @@ window.addEventListener('DOMContentLoaded', function() {
         calcBlock.addEventListener('change', (event) => {
             const target = event.target;
 
-            // if (target.matches('.calc-type') || target.matches('.calc-square') ||
-            //  target.matches('.calc-day') || target.matches('.calc-count')) {
-            //      console.log(1);
-            //  }
-            // if (target === calcType || target === calcSquare || target === calcDay || target === calcCount) {
-            //     console.log(1);
-            // }
+
 
             if (target.matches('select') || target.matches('input')) {
                 countSum();
@@ -327,5 +320,65 @@ window.addEventListener('DOMContentLoaded', function() {
     };
 
     calc(100);
+
+
+    // ajax - форма
+
+    const sendForm = () => {
+
+        const errorMessage = 'Что-то пошло не так...',
+            loadMessage = 'Загрузка',
+            sucsessMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
+
+        const form = document.getElementById('form1'),
+            popUp = document.getElementById('form3'),
+            form2 = document.getElementById('form2');
+
+
+        const bindingForm = (form) => {
+            const statusMessage = document.createElement('div');
+            form.addEventListener('submit', (event) =>  {
+            event.preventDefault();
+            statusMessage.style.color = 'white';
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form);
+                let body = {};
+                formData.forEach((val, key) => {
+                    body[key] = val;
+                });
+                postData(body, () =>{
+                    statusMessage.textContent = sucsessMessage;
+                }, (error) => {
+                    console.log(error);
+                    statusMessage.textContent = errorMessage;
+                });
+            });
+            
+            const postData = (body, outputData) => {
+                const request = new XMLHttpRequest();
+                request.addEventListener('readystatechange', () => {
+                    if (request.readyState !== 4) {
+                        return;
+                    }
+                    if (request.status === 200) {
+                        outputData();
+                    } else {
+                        errorData(request.status);
+                    }
+
+                });
+                request.open('POST', './../server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+                
+                console.log(body);
+                request.send(JSON.stringify(body));
+        }
+        }
+        bindingForm(form);
+        bindingForm(popUp);
+        bindingForm(form2);
+    };
+    sendForm();
     
 });
