@@ -378,6 +378,25 @@ window.addEventListener('DOMContentLoaded', function() {
         bindingForm(form);
         bindingForm(popUp);
         bindingForm(form2);
+        const nameForms = document.querySelectorAll('[name="user_name"]');
+        const messageForms = document.querySelectorAll('[name="user_message"]');
+        const telForms = document.querySelectorAll('[name="user_phone"]');
+        nameForms.forEach((elem) => {
+            elem.addEventListener('input', () => {
+                elem.value = elem.value.replace(/[^А-яа-я ]/, '');
+            })
+        });
+        messageForms.forEach((elem) => {
+            elem.addEventListener('input', () => {
+                elem.value = elem.value.replace(/[^А-яа-я ]/, '');
+            })
+        });
+        telForms.forEach((elem) => {
+            elem.addEventListener('input', () => {
+                elem.value = elem.value.replace(/[^+0-9]/, '');
+            })
+        });
+        
     };
     sendForm();
     
