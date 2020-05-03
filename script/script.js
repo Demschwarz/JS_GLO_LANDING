@@ -383,17 +383,17 @@ window.addEventListener('DOMContentLoaded', function() {
         const telForms = document.querySelectorAll('[name="user_phone"]');
         nameForms.forEach((elem) => {
             elem.addEventListener('input', () => {
-                elem.value = elem.value.replace(/[^А-яа-я ]/, '');
+                elem.value = elem.value.replace(/[^А-яа-я ]/g, '');
             })
         });
         messageForms.forEach((elem) => {
             elem.addEventListener('input', () => {
-                elem.value = elem.value.replace(/[^А-яа-я ]/, '');
+                elem.value = elem.value.replace(/[^А-яа-я ]/g, '');
             })
         });
         telForms.forEach((elem) => {
             elem.addEventListener('input', () => {
-                elem.value = elem.value.replace(/[^+0-9]/, '');
+                elem.value = elem.value.replace(/[^+0-9]/g, '');
             })
         });
         
