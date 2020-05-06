@@ -338,41 +338,44 @@ window.addEventListener('DOMContentLoaded', function() {
         const bindingForm = (form) => {
             const statusMessage = document.createElement('div');
             form.addEventListener('submit', (event) =>  {
-            event.preventDefault();
-            statusMessage.style.color = 'white';
-            form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
-            const formData = new FormData(form);
-                let body = {};
-                formData.forEach((val, key) => {
-                    body[key] = val;
-                });
-                postData(body, () =>{
-                    statusMessage.textContent = sucsessMessage;
-                }, (error) => {
-                    console.log(error);
-                    statusMessage.textContent = errorMessage;
-                });
+                event.preventDefault();
+                statusMessage.style.color = 'white';
+                form.appendChild(statusMessage);
+                statusMessage.textContent = loadMessage;
+                const formData = new FormData(form);
+                    let body = {};
+                    formData.forEach((val, key) => {
+                        body[key] = val;
+                    });
+                    postData(body)
+                        .then(statusMessage.textContent = sucsessMessage)
+                        .catch(error => statusMessage.textContent = errorMessage);
+                    // здесь был старый код, не смотрите сюда, я просто не хочу делать лишний коммит
+                    // postData(body , () =>{
+                    //     statusMessage.textContent = sucsessMessage;
+                    // }, (error) => {
+                    //     console.log(error);
+                    //     statusMessage.textContent = errorMessage;
+                    // });
             });
             
-            const postData = (body, outputData) => {
-                const request = new XMLHttpRequest();
-                request.addEventListener('readystatechange', () => {
-                    if (request.readyState !== 4) {
-                        return;
-                    }
-                    if (request.status === 200) {
-                        outputData();
-                    } else {
-                        errorData(request.status);
-                    }
-
+            const postData = (body) => {
+                return new Promise((resolve, reject) => {
+                    const request = new XMLHttpRequest();
+                    request.addEventListener('readystatechange', () => {
+                        if (request.readyState !== 4) {
+                            return;
+                        }
+                        if (request.status === 200) {
+                            resolve();
+                        } else {
+                            reject(request.status);
+                        }
+                    });
+                    request.open('POST', '././server.php');
+                    request.setRequestHeader('Content-Type', 'application/json');
+                    request.send(JSON.stringify(body));
                 });
-                request.open('POST', './../server.php');
-                request.setRequestHeader('Content-Type', 'application/json');
-                
-                console.log(body);
-                request.send(JSON.stringify(body));
         }
         }
         bindingForm(form);
