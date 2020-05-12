@@ -12,16 +12,25 @@ const sendForm = () => {
     const bindingForm = (form) => {
         const inputs = form.querySelectorAll('input');
         const btn = form.querySelector('button');
+        const telInput = form.querySelector('input[name="user_phone"]');
         btn.setAttribute('disabled', 'true');
         inputs.forEach((elem) => {
             elem.addEventListener('change', () => {
-                if (elem.value === '') {
+                if ((elem.value === '') 
+                // || ((elem.getAttribute('name') === 'user_phone') && (((elem.value.length != 0) && (elem.value.length < 8)) || elem.value.length > 20))
+                ) 
+                {
                     btn.setAttribute('disabled', 'true');
                 } else {
-                    btn.removeAttribute('disabled');
+                    if ((telInput.value.length >= 8) &&(telInput.value.length <= 20)){
+                        btn.removeAttribute('disabled');
+                    } else {
+                        btn.setAttribute('disabled', 'true');
+                    }
                 }
             })
-        })
+        });
+
         const statusMessage = document.createElement('div');
         form.addEventListener('submit', (event) =>  {
             event.preventDefault();
