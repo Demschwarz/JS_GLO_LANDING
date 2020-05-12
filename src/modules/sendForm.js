@@ -10,6 +10,18 @@ const sendForm = () => {
 
 
     const bindingForm = (form) => {
+        const inputs = form.querySelectorAll('input');
+        const btn = form.querySelector('button');
+        btn.setAttribute('disabled', 'true');
+        inputs.forEach((elem) => {
+            elem.addEventListener('change', () => {
+                if (elem.value === '') {
+                    btn.setAttribute('disabled', 'true');
+                } else {
+                    btn.removeAttribute('disabled');
+                }
+            })
+        })
         const statusMessage = document.createElement('div');
         form.addEventListener('submit', (event) =>  {
             event.preventDefault();
