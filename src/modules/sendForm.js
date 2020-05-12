@@ -26,11 +26,14 @@ const sendForm = () => {
                         if (response.status != 200) {
                             throw new Error('network status is not 200');
                         }
-                        statusMessage.textContent = sucsessMessage
+                        statusMessage.textContent = sucsessMessage;
+                        setTimeout(() => statusMessage.style.display = 'none', 10000)
+
                     })
                     .catch(error => {
                         console.error(error);
-                        statusMessage.textContent = errorMessage
+                        statusMessage.textContent = errorMessage;
+                        setTimeout(() => statusMessage.style.display = 'none', 10000)
                     });
         });
         

@@ -19,6 +19,7 @@ const togglePopUp = () => {
 
             } , 8);
         } else {
+            popUp.style.opacity = 1;
             popupContent.style.margin = 'auto';
         }
     }));
