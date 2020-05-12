@@ -27,13 +27,13 @@ const sendForm = () => {
                             throw new Error('network status is not 200');
                         }
                         statusMessage.textContent = sucsessMessage;
-                        setTimeout(() => statusMessage.style.display = 'none', 10000)
-
+                        setTimeout(() => form.removeChild(statusMessage), 10000)
+                        
                     })
                     .catch(error => {
                         console.error(error);
                         statusMessage.textContent = errorMessage;
-                        setTimeout(() => statusMessage.style.display = 'none', 10000)
+                        setTimeout(() => form.removeChild(statusMessage), 10000)
                     });
         });
         
