@@ -10,7 +10,7 @@ const toggleMenu = () => {
     }
     btnMenu.addEventListener('click', handlerMenu); // обработчик событий 1
     menu.addEventListener('click', (event) => { // обработчик событий 2
-        if (event.target === closeBtn || ((event.target.closest('menu') === menu) && event.target !== menu)) {
+        if (event.target === closeBtn || ((event.target.closest('menu') === menu) && event.target !== menu && event.target.closest('li') !== event.target)) {
             handlerMenu();
         }
     })
